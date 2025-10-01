@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "616229547905",
+    "project_id": "quan-ly-trai-dui-ecee6",
+    "storage_bucket": "quan-ly-trai-dui-ecee6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616229547905:android:cec3ae1a43c713605b0280",
+        "android_client_info": {
+          "package_name": "com.quanlytraidui.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "616229547905-n9nc5ino1va6sgevm0rlf5sgdh1dpuc7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF79ICxHwPTmcBcIlWpa9tMWKA1qhJTKs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616229547905-n9nc5ino1va6sgevm0rlf5sgdh1dpuc7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
