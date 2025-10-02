@@ -8,13 +8,14 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import BoCucChinh from "./features/bo_cuc/BoCucChinh";
 import ManHinhChao from "./features/man_hinh_chao/ManHinhChao";
+// 👉 Thêm màn hình QuanLyHoaDon
+import QuanLyHoaDon from "./features/so_ban_hang/QuanLyHoaDon";
 import ManHinhTaiLieu from "./features/tai_lieu/ManHinhTaiLieu";
 import BanVe2DScreenFull from "./features/thiet_ke/BanVe2DScreenFull";
 import DangKy from "./features/xac_thuc/DangKy";
 import DangNhap from "./features/xac_thuc/DangNhap";
 import ThongBaoDangNhap from "./features/xac_thuc/ThongBaoDangNhap";
 import { auth, db } from "./firebase";
-
 
 
 const Stack = createNativeStackNavigator();
@@ -106,6 +107,13 @@ export default function App() {
                   name="ManHinhTaiLieu"
                   component={ManHinhTaiLieu}
                   options={{ headerShown: true, title: "Tài liệu" }}
+                />
+
+                {/* 👉 Thêm màn hình QuanLyHoaDon */}
+                <Stack.Screen
+                  name="QuanLyHoaDon"
+                  component={QuanLyHoaDon}
+                  options={{ headerShown: true, title: "Quản lý Hóa Đơn" }}
                 />
               </Stack.Navigator>
             </NavigationContainer>

@@ -2,19 +2,22 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { auth } from "../../firebase";
-// Màn hình
+// --- Màn hình ---
 import BangDieuKhien from "../quan_ly/BangDieuKhien";
 import QuanLyNongTrai from "../quan_ly/QuanLyNongTrai_P1";
 import QuanLyNguoiDung from "../quan_ly_nguoi_dung/QuanLyNguoiDung";
-// 👉 Thêm mới: Màn hình Sổ Bán Hàng
+// 👉 Thêm mới: Màn hình Quản lý Bán Hàng (Hóa Đơn + Khách Hàng)
+import QuanLyBanHang from "../so_ban_hang/QuanLyBanHang";
 import SoBanHang from "../so_ban_hang/SoBanHang";
 import ManHinhTaiLieu from "../tai_lieu/ManHinhTaiLieu";
 import TaiLieu from "../tai_lieu/TaiLieu";
 import ThietKe from "../thiet_ke/ThietKe";
 import TroChuyen from "../tro_chuyen/TroChuyen";
-// Layout
+// --- Layout ---
 import MenuChinh from "./MenuChinh";
 import ThanhBen from "./ThanhBen";
+
+
 
 
 
@@ -22,10 +25,12 @@ export default function BoCucChinh({ user, navigation }) {
   const [activeScreen, setActiveScreen] = useState("BangDieuKhien");
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
+  // --- Kiểm tra user ---
   useEffect(() => {
     if (!user) navigation.replace("DangNhap");
   }, [user]);
 
+  // --- Logout ---
   const handleLogout = async () => {
     try {
       await auth.signOut();
@@ -35,6 +40,7 @@ export default function BoCucChinh({ user, navigation }) {
     }
   };
 
+  // --- Render nội dung theo activeScreen ---
   const renderContent = () => {
     let ScreenComponent;
     switch (activeScreen) {
@@ -59,10 +65,17 @@ export default function BoCucChinh({ user, navigation }) {
       case "NguoiDung":
         ScreenComponent = <QuanLyNguoiDung user={user} />;
         break;
-      // 👉 Thêm case cho Sổ Bán Hàng
+
+      // --- Sổ Bán Hàng ---
       case "SoBanHang":
         ScreenComponent = <SoBanHang user={user} />;
         break;
+
+      // --- Quản lý Bán Hàng (Hóa Đơn + Khách Hàng) ---
+      case "QuanLyBanHang":
+        ScreenComponent = <QuanLyBanHang user={user} />;
+        break;
+
       default:
         ScreenComponent = <BangDieuKhien user={user} />;
         break;
@@ -74,6 +87,7 @@ export default function BoCucChinh({ user, navigation }) {
 
   return (
     <View style={styles.container}>
+      {/* Header + Menu */}
       <MenuChinh
         user={user}
         title="Quản Lý Trại Dúi"
@@ -81,6 +95,7 @@ export default function BoCucChinh({ user, navigation }) {
         onLogout={handleLogout}
       />
 
+      {/* Thanh bên (Sidebar) */}
       <ThanhBen
         isOpen={sidebarVisible}
         onClose={() => setSidebarVisible(false)}
@@ -91,6 +106,7 @@ export default function BoCucChinh({ user, navigation }) {
         isAdmin={user?.role === "admin"}
       />
 
+      {/* Nội dung chính */}
       <View style={styles.content}>{renderContent()}</View>
     </View>
   );

@@ -1,5 +1,6 @@
 // src/features/xac_thuc/DangNhap.jsx
 import * as Google from "expo-auth-session/providers/google";
+import Constants from "expo-constants";
 import * as WebBrowser from "expo-web-browser";
 import {
   createUserWithEmailAndPassword,
@@ -13,8 +14,7 @@ import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
   Animated,
-  Image,
-  StyleSheet,
+  Image, StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -71,8 +71,12 @@ export default function DangNhap({ navigation }) {
   const [thongBaoMsg, setThongBaoMsg] = useState("");
   const [fadeAnim] = useState(new Animated.Value(0));
 
+  // --- Cấu hình Google Sign-In
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    clientId: "616229547905-n9nc5ino1va6sgevm0rlf5sgdh1dpuc7.apps.googleusercontent.com",
+    clientId: "616229547905-k5f0o6i8md447slbpd5mobppco3258ro.apps.googleusercontent.com", // Web
+    androidClientId: "616229547905-5knhuolmi5otrfjjejqpd1fqrdo0b2vh.apps.googleusercontent.com", // Android
+    iosClientId: "616229547905-8j9uebdpclrv1iniq6ghjpjhp8mu0rrf.apps.googleusercontent.com", // iOS
+    expoClientId: "616229547905-k5f0o6i8md447slbpd5mobppco3258ro.apps.googleusercontent.com", // Expo Go
   });
 
   // --- Fade-in animation khi overlay xuất hiện
@@ -88,7 +92,7 @@ export default function DangNhap({ navigation }) {
     }
   }, [showThongBao]);
 
-  // --- Google Sign-In
+  // --- Google Sign-In xử lý response
   useEffect(() => {
     const handleGoogleResponse = async () => {
       if (response?.type === "success" && response.params.id_token) {
@@ -196,6 +200,13 @@ export default function DangNhap({ navigation }) {
     }
   };
 
+  // --- Google Sign-In bấm nút
+  const handleGooglePress = () => {
+    // Chỉ dùng proxy khi chạy trên Expo Go
+    const useProxy = Constants.appOwnership === "expo";
+    promptAsync({ useProxy });
+  };
+
   return (
     <View style={styles.container}>
       <Image source={require("../../assets/logo.png")} style={styles.logo} />
@@ -231,7 +242,7 @@ export default function DangNhap({ navigation }) {
 
         <TouchableOpacity
           style={[styles.button, styles.btnRed, !request && { opacity: 0.6 }]}
-          onPress={() => promptAsync({ useProxy: true })}
+          onPress={handleGooglePress}
           disabled={!request}
         >
           <Text style={styles.buttonText}>{isRegister ? "Đăng ký bằng Google" : "Đăng nhập bằng Google"}</Text>

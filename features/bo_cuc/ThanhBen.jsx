@@ -44,14 +44,12 @@ export default function ThanhBen({
 
   if (!visible) return null;
 
-  // --- Sửa logic hiển thị tên người dùng ---
   const shortName = user?.displayName
     ? user.displayName
     : user?.email
       ? user.email.split("@")[0]
       : "Người dùng";
 
-  // Build menu dựa trên quyền
   const menuItems = [
     { key: "BangDieuKhien", label: "Bảng điều khiển", icon: "home" },
     { key: "QuanLy", label: "Quản lý", icon: "albums" },
@@ -68,11 +66,12 @@ export default function ThanhBen({
     );
   }
 
-  // Các menu còn lại giữ nguyên + thêm mục Sổ bán hàng
+  // Các menu còn lại
   menuItems.push(
     { key: "ThietKe", label: "Thiết kế", icon: "construct" },
     { key: "TroChuyen", label: "Trò chuyện", icon: "chatbubbles" },
-    { key: "SoBanHang", label: "Sổ bán hàng", icon: "cart" }, // 👈 Thêm mục mới
+    { key: "SoBanHang", label: "Sổ bán hàng", icon: "cart" },
+    { key: "QuanLyBanHang", label: "Quản lý bán hàng", icon: "document" }, // ✅ Sửa key
     { key: "NguoiDung", label: "Người dùng", icon: "people" }
   );
 
@@ -80,7 +79,6 @@ export default function ThanhBen({
     <View style={styles.overlay}>
       <TouchableOpacity style={styles.backdrop} onPress={onClose} activeOpacity={1} />
       <Animated.View style={[styles.sidebar, { transform: [{ translateX }] }]}>
-
         <ScrollView contentContainerStyle={styles.menuContainer}>
           {menuItems.map((item) => (
             <TouchableOpacity
