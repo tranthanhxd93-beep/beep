@@ -24,7 +24,7 @@ const firebaseConfig = {
   projectId: "quan-ly-trai-dui-ecee6",
   storageBucket: "quan-ly-trai-dui-ecee6.appspot.com",
   messagingSenderId: "616229547905",
-  appId: "1:616229547905:android:cec3ae1a43c713605b0280",
+  appId: "1:616229547905:android:cec3ae1a43c713605b0280", // Android App ID
 };
 
 // ====== Khởi tạo Firebase ======
@@ -42,11 +42,7 @@ export const googleProvider = new GoogleAuthProvider();
 export const setupRecaptcha = (containerId = "recaptcha-container") => {
   if (Platform.OS !== "web") return null;
 
-  if (
-    !window.recaptchaVerifier &&
-    process.env.NODE_ENV !== "test" &&
-    process.env.NODE_ENV !== "development"
-  ) {
+  if (!window.recaptchaVerifier) {
     window.recaptchaVerifier = new RecaptchaVerifier(
       containerId,
       { size: "invisible" },
@@ -71,6 +67,7 @@ export const saveUser = async (user, role = "pending") => {
       displayName: user.displayName || "Người dùng mới",
       approved: false,
       role: role,
+      blocked: false,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });

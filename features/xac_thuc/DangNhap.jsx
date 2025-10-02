@@ -202,7 +202,6 @@ export default function DangNhap({ navigation }) {
 
   // --- Google Sign-In bấm nút
   const handleGooglePress = () => {
-    // Chỉ dùng proxy khi chạy trên Expo Go
     const useProxy = Constants.appOwnership === "expo";
     promptAsync({ useProxy });
   };
